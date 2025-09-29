@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DeBank‑style Portfolio Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    // ==== ВСТРОЕННЫЙ ПРИМЕР ДАННЫХ (можно загрузить кнопкой) ====
+    const SAMPLE_JSON = `[{
+      "id":"arb_revert","chain":"arb","name":"Revert","site_url":"https://revert.finance","logo_url":"https://static.debank.com/image/project/logo_url/arb_revert/cae598d783d823d794ba28c8495d8381.png","has_supported_portfolio":true,"tvl":14305155.049346969,
+      "portfolio_item_list":[
+        {"stats":{"asset_usd_value":241974.51469045057,"debt_usd_value":104814.63283986405,"net_usd_value":137159.8818505865},
+         "asset_dict":{"0x82af49447d8a07e3bd95bd0d56f35241523fbab1":14.258732183688409,"0xaf88d065e77c8cc2239327c5edb3a432268e5831":78782.0541422154},
+         "asset_token_list":[
+           {"id":"0x82af49447d8a07e3bd95bd0d56f35241523fbab1","chain":"arb","name":"Wrapped Ether","symbol":"WETH","optimized_symbol":"WETH","decimals":18,"logo_url":"https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png","price":4096.39,"is_verified":true,"is_core":true,"is_wallet":true,"time_at":1622346702.0,"amount":14.258732183688409},
+           {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","optimized_symbol":"USDC","decimals":6,"logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"is_verified":true,"is_core":true,"is_wallet":true,"time_at":1667248932.0,"amount":78782.0541422154}
+         ],
+         "withdraw_actions":[],"update_at":1759128524.0,
+         "name":"Lending","detail_types":["lending"],
+         "detail":{
+           "supply_token_list":[
+             {"id":"0x82af49447d8a07e3bd95bd0d56f35241523fbab1","chain":"arb","name":"Wrapped Ether","symbol":"WETH","optimized_symbol":"WETH","decimals":18,"logo_url":"https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png","price":4096.39,"amount":13.801178838968287},
+             {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","optimized_symbol":"USDC","decimals":6,"logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":181794.4284282154}
+           ],
+           "reward_token_list":[
+             {"id":"0x82af49447d8a07e3bd95bd0d56f35241523fbab1","chain":"arb","name":"Wrapped Ether","symbol":"WETH","logo_url":"https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png","price":4096.39,"amount":0.4575533447201212},
+             {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":1844.184407}
+           ],
+           "borrow_token_list":[
+             {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":104856.558693}
+           ],
+           "health_rate":1.7616717893310998
+         },
+         "proxy_detail":{},"position_index":"4931272",
+         "pool":{"id":"0x74e6afef5705beb126c6d3bf46f8fad8f3e07825:lending","chain":"arb","project_id":"arb_revert","adapter_id":"revert_lending","controller":"0x74e6afef5705beb126c6d3bf46f8fad8f3e07825","index":"lending","time_at":1723068921}
+        },
+        {"stats":{"asset_usd_value":499253.62843098526,"debt_usd_value":200936.32388044783,"net_usd_value":298317.30455053743},
+         "asset_dict":{"0x82af49447d8a07e3bd95bd0d56f35241523fbab1":32.84905628011034,"0xaf88d065e77c8cc2239327c5edb3a432268e5831":163820.26079881436},
+         "asset_token_list":[
+           {"id":"0x82af49447d8a07e3bd95bd0d56f35241523fbab1","chain":"arb","name":"Wrapped Ether","symbol":"WETH","decimals":18,"logo_url":"https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png","price":4096.39,"amount":32.84905628011034},
+           {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","decimals":6,"logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":163820.26079881436}
+         ],
+         "withdraw_actions":[],"update_at":1759128524.0,
+         "name":"Lending","detail_types":["lending"],
+         "detail":{
+           "supply_token_list":[
+             {"id":"0x82af49447d8a07e3bd95bd0d56f35241523fbab1","chain":"arb","name":"Wrapped Ether","symbol":"WETH","logo_url":"https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png","price":4096.39,"amount":31.90148715079305},
+             {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":360717.34277681436}
+           ],
+           "reward_token_list":[
+             {"id":"0x82af49447d8a07e3bd95bd0d56f35241523fbab1","chain":"arb","name":"Wrapped Ether","symbol":"WETH","logo_url":"https://static.debank.com/image/arb_token/logo_url/0x82af49447d8a07e3bd95bd0d56f35241523fbab1/61844453e63cf81301f845d7864236f6.png","price":4096.39,"amount":0.9475691293172921},
+             {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":4119.616432}
+           ],
+           "borrow_token_list":[
+             {"id":"0xaf88d065e77c8cc2239327c5edb3a432268e5831","chain":"arb","name":"USD Coin","symbol":"USDC","logo_url":"https://static.debank.com/image/arb_token/logo_url/0xaf88d065e77c8cc2239327c5edb3a432268e5831/fffcd27b9efff5a86ab942084c05924d.png","price":0.9996001599360256,"amount":201016.69841}
+           ],
+           "health_rate":1.8947389830998091
+         },
+         "proxy_detail":{},"position_index":"4931267",
+         "pool":{"id":"0x74e6afef5705beb126c6d3bf46f8fad8f3e07825:lending","chain":"arb","project_id":"arb_revert","adapter_id":"revert_lending","controller":"0x74e6afef5705beb126c6d3bf46f8fad8f3e07825","index":"lending","time_at":1723068921}
+        }
+      ]
+    }]`;
+  </script>
+  <style>
+    :root { --bg:#0b1020; --card:#111834; --muted:#a8b4d4; --line:#1c2447; --ok:#10b981; --warn:#f59e0b; --bad:#ef4444; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: #e7ecff; }
+    .wrap { max-width: 1100px; margin: 24px auto; padding: 0 16px; }
+    .toolbar { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px; }
+    .btn { background:#2b3566; border:1px solid #3a4581; padding:10px 14px; border-radius:12px; color:#fff; font-weight:600; cursor:pointer; }
+    .btn:hover { filter: brightness(1.1); }
+    .in { width:100%; height:160px; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:12px; padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+    .grid { display:grid; grid-template-columns: 1fr; gap:16px; }
+    .card { background: var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow: 0 10px 24px rgba(2,7,26,.35); }
+    .head { display:flex; align-items:center; gap:12px; justify-content:space-between; }
+    .proto { display:flex; align-items:center; gap:10px; }
+    .logo { width:28px; height:28px; border-radius:50%; background:#0f1733; object-fit:cover; }
+    .pill { padding:4px 10px; border-radius:999px; background:#0f1733; border:1px solid var(--line); font-size:12px; color:var(--muted); }
+    .hrow { display:flex; gap:10px; align-items:center; margin-top:8px; }
+    .hvalue { font-weight:700; }
+    .section { margin-top:14px; border-top:1px dashed var(--line); padding-top:12px; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding:10px 6px; border-bottom:1px solid var(--line); text-align:left; font-size:14px; }
+    th { color:#b9c6ea; font-weight:600; }
+    .right { text-align:right; }
+    .muted { color: var(--muted); }
+    .sumline { display:flex; justify-content: flex-end; gap:20px; margin-top:8px; color:#cfe0ff; }
+    .sumline div { background:#0f1733; border:1px solid var(--line); padding:6px 10px; border-radius:10px; }
+    .total { font-size:18px; font-weight:800; }
+    .hrate.ok { color: var(--ok); } .hrate.warn { color: var(--warn); } .hrate.bad { color: var(--bad); }
+    @media (min-width: 900px){ .grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 style="margin:8px 0 14px 0; font-size:28px;">DeBank‑style Portfolio Viewer</h1>
+    <p class="muted" style="margin-top:-6px;">Вставь JSON (как из DeBank API) → нажми «Отрисовать». Снизу появится визуализация блоков Lending с Health Rate, Supplied/Borrowed/Rewards и суммами в USD.</p>
+
+    <div class="toolbar">
+      <button class="btn" id="loadSample">Загрузить пример</button>
+      <button class="btn" id="renderBtn">Отрисовать</button>
+      <button class="btn" id="clearBtn">Очистить</button>
+    </div>
+
+    <!-- ====== DeBank API Панель ====== -->
+    <div class="card" style="margin-bottom:12px;">
+      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
+        <div style="flex:1 1 220px;">
+          <label class="muted" style="font-size:12px;">DeBank API Base (можно прокси)</label>
+          <input id="apiBase" value="https://pro-openapi.debank.com" style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
+        </div>
+        <div style="flex:1 1 220px;">
+          <label class="muted" style="font-size:12px;">User Address</label>
+          <input id="userAddr" placeholder="0x..." style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
+        </div>
+        <div style="flex:1 1 220px;">
+          <label class="muted" style="font-size:12px;">Chain (опц.)</label>
+          <input id="chainId" placeholder="arb / eth / base ..." style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
+        </div>
+        <div style="flex:1 1 220px;">
+          <label class="muted" style="font-size:12px;">API Key (заголовок будет X-Api-Key/AccessKey)</label>
+          <input id="apiKey" type="password" placeholder="ключ" style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
+        </div>
+        <button class="btn" id="fetchDeBank">Fetch from DeBank</button>
+      </div>
+      <div class="muted" style="margin-top:8px; font-size:12px;">
+        Если CORS блокирует запросы — укажи в поле API Base свой прокси (например, serverless endpoint), который добавляет ключ и пробрасывает заголовки.
+      </div>
+    </div>
+
+    <textarea id="jsonIn" class="in" placeholder="Вставьте сюда JSON…"></textarea>
+
+    <div id="summary" style="margin:18px 0 8px 0; font-size:18px; font-weight:700;"></div>
+    <div id="out" class="grid"></div>
+  </div>
+
+  <script>
+    const inEl = document.getElementById('jsonIn');
+    const outEl = document.getElementById('out');
+    const sumEl = document.getElementById('summary');
+
+    document.getElementById('loadSample').onclick = () => { inEl.value = SAMPLE_JSON; };
+    document.getElementById('clearBtn').onclick = () => { inEl.value = ''; outEl.innerHTML = ''; sumEl.textContent = ''; };
+    document.getElementById('renderBtn').onclick = () => render();
+
+    function usd(v){ if(!isFinite(v)) return '—'; return `$${Number(v).toLocaleString('en-US', {maximumFractionDigits:2})}` }
+    function qty(v, sym){ if(v === undefined || v === null) return '—'; const n = Number(v); const d = n >= 100 ? 2 : 4; return `${n.toLocaleString('en-US',{maximumFractionDigits:d})} ${sym||''}`.trim(); }
+    function healthClass(x){ if(x === undefined || x === null) return ''; if(x >= 2) return 'ok'; if(x >= 1.5) return 'warn'; return 'bad'; }
+
+    function calcUsd(token){ // если price есть — умножаем, иначе 0
+      const price = Number(token.price ?? 0); const amt = Number(token.amount ?? 0);
+      return price * amt;
+    }
+
+    function render(){
+      outEl.innerHTML = ''; sumEl.textContent = '';
+      let data;
+      try{
+        data = JSON.parse(inEl.value);
+      }catch(e){
+        alert('Не удалось распарсить JSON: ' + e.message);
+        return;
+      }
+      if(!Array.isArray(data) || data.length === 0){
+        alert('Ожидается массив протоколов с portfolio_item_list');
+        return;
+      }
+
+      let grandTotal = 0; // суммарный net_usd_value по всем карточкам
+      const frag = document.createDocumentFragment();
+
+      data.forEach(protocol => {
+        const protoName = protocol.name || 'Protocol';
+        const logo = protocol.logo_url; 
+        const site = protocol.site_url;
+        const items = protocol.portfolio_item_list || [];
+
+        items.forEach((item, idx) => {
+          const det = item.detail || {}; 
+          const health = det.health_rate;
+          const supply = det.supply_token_list || [];
+          const borrow = det.borrow_token_list || [];
+          const rewards = (det.reward_token_list || []).filter(t => Number(t.amount) > 0);
+          const net = (item.stats && item.stats.net_usd_value) ? Number(item.stats.net_usd_value) : (supply.reduce((a,t)=>a+calcUsd(t),0) - borrow.reduce((a,t)=>a+calcUsd(t),0));
+          grandTotal += net;
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <div class="head">
+              <div class="proto">
+                <img class="logo" src="${logo || ''}" onerror="this.style.display='none'" alt="logo"/>
+                <div>
+                  <div style="font-weight:700; font-size:16px;">${protoName}</div>
+                  <div class="muted" style="font-size:12px;">${item.name || ''} • <a href="${site||'#'}" target="_blank" class="muted" style="text-decoration: none;">${protocol.id || ''}</a></div>
+                </div>
+              </div>
+              <div class="hrow">
+                <span class="pill">Index: ${item.position_index || '—'}</span>
+                <span class="pill">Updated: ${item.update_at ? new Date(item.update_at*1000).toLocaleString() : '—'}</span>
+              </div>
+            </div>
+            <div class="hrow" style="margin-top:12px;">
+              <div class="pill">Asset: <span class="hvalue">${usd(item.stats?.asset_usd_value)}</span></div>
+              <div class="pill">Debt: <span class="hvalue">${usd(item.stats?.debt_usd_value)}</span></div>
+              <div class="pill">Net: <span class="hvalue">${usd(net)}</span></div>
+              <div class="pill">Health Rate: <span class="hrate ${healthClass(health)}">${health?.toFixed ? health.toFixed(2) : (health ?? '—')}</span></div>
+            </div>
+          `;
+
+          // === СЕКЦИИ
+          const sections = [
+            {title:'Supplied', list:supply},
+            {title:'Borrowed', list:borrow},
+            {title:'Rewards', list:rewards}
+          ];
+
+          sections.forEach(sec => {
+            const box = document.createElement('div');
+            box.className = 'section';
+            const rows = sec.list.map(t => {
+              const sym = t.optimized_symbol || t.symbol || '';
+              const amount = qty(t.amount, sym);
+              const val = usd(calcUsd(t));
+              const logo = t.logo_url;
+              return `
+                <tr>
+                  <td style="width:44px"><img class="logo" src="${logo||''}" onerror="this.style.display='none'"/></td>
+                  <td>${sym}</td>
+                  <td class="muted">${t.name || ''}</td>
+                  <td class="right">${amount}</td>
+                  <td class="right">${val}</td>
+                </tr>`;
+            }).join('');
+
+            const sumUsd = sec.list.reduce((a,t)=>a+calcUsd(t),0);
+
+            box.innerHTML = `
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <div style="font-weight:700; font-size:15px;">${sec.title}</div>
+                <div class="muted">${sec.list.length} assets</div>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Asset</th>
+                    <th class="muted">Name</th>
+                    <th class="right">Balance</th>
+                    <th class="right">USD Value</th>
+                  </tr>
+                </thead>
+                <tbody>${rows || '<tr><td colspan="5" class="muted">—</td></tr>'}</tbody>
+              </table>
+              <div class="sumline"><div>Итого: <b>${usd(sumUsd)}</b></div></div>
+            `;
+            card.appendChild(box);
+          });
+
+          frag.appendChild(card);
+        });
+      });
+
+      outEl.appendChild(frag);
+      sumEl.innerHTML = `<span class="total">Итого Net Value: ${usd(grandTotal)}</span>`;
+      window.scrollTo({top: sumEl.offsetTop - 10, behavior:'smooth'});
+    }
+      // === DeBank API fetch ===
+    async function fetchFromDeBank(){
+      const base = document.getElementById('apiBase').value.trim().replace(/\/$/, '');
+      const addr = document.getElementById('userAddr').value.trim();
+      const key  = document.getElementById('apiKey').value.trim();
+      const chain= document.getElementById('chainId').value.trim();
+      if(!addr){ alert('Укажи user address'); return; }
+
+      // Основной эндпоинт: complex_protocol_list — возвращает структуру, совместимую с нашим рендером
+      const url = `${base}/v1/user/complex_protocol_list?user_addr=${encodeURIComponent(addr)}${chain?`&chain=${encodeURIComponent(chain)}`:''}&is_all=true`;
+
+      const headers = { 'Accept':'application/json' };
+      // Часто DeBank использует X-Api-Key или AccessKey — попробуем оба
+      if(key){ headers['X-Api-Key'] = key; headers['AccessKey'] = key; }
+
+      try{
+        const r = await fetch(url, { headers });
+        if(!r.ok){
+          const text = await r.text();
+          throw new Error(`HTTP ${r.status}: ${text.slice(0,300)}`);
+        }
+        const json = await r.json();
+        // Ожидаем поле data или массив протоколов:
+        const payload = Array.isArray(json) ? json : (json.data ?? json);
+        document.getElementById('jsonIn').value = JSON.stringify(payload, null, 2);
+        render();
+      }catch(e){
+        alert('Ошибка запроса к DeBank: ' + e.message + '
+
+Подсказка: если CORS, используй свой прокси в "API Base".');
+      }
+    }
+
+    document.getElementById('fetchDeBank').addEventListener('click', fetchFromDeBank);
+  </script>
+</body>
+</html>
