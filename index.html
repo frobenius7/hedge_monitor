@@ -105,32 +105,6 @@
       <button class="btn" id="clearBtn">Очистить</button>
     </div>
 
-    <!-- ====== DeBank API Панель ====== -->
-    <div class="card" style="margin-bottom:12px;">
-      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end;">
-        <div style="flex:1 1 220px;">
-          <label class="muted" style="font-size:12px;">DeBank API Base (можно прокси)</label>
-          <input id="apiBase" value="https://pro-openapi.debank.com" style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
-        </div>
-        <div style="flex:1 1 220px;">
-          <label class="muted" style="font-size:12px;">User Address</label>
-          <input id="userAddr" placeholder="0x..." style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
-        </div>
-        <div style="flex:1 1 220px;">
-          <label class="muted" style="font-size:12px;">Chain (опц.)</label>
-          <input id="chainId" placeholder="arb / eth / base ..." style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
-        </div>
-        <div style="flex:1 1 220px;">
-          <label class="muted" style="font-size:12px;">API Key (заголовок будет X-Api-Key/AccessKey)</label>
-          <input id="apiKey" type="password" placeholder="ключ" style="width:100%; background:#0f1733; border:1px solid #283163; color:#cfe0ff; border-radius:10px; padding:10px;"/>
-        </div>
-        <button class="btn" id="fetchDeBank">Fetch from DeBank</button>
-      </div>
-      <div class="muted" style="margin-top:8px; font-size:12px;">
-        Если CORS блокирует запросы — укажи в поле API Base свой прокси (например, serverless endpoint), который добавляет ключ и пробрасывает заголовки.
-      </div>
-    </div>
-
     <textarea id="jsonIn" class="in" placeholder="Вставьте сюда JSON…"></textarea>
 
     <div id="summary" style="margin:18px 0 8px 0; font-size:18px; font-weight:700;"></div>
@@ -268,40 +242,6 @@
       sumEl.innerHTML = `<span class="total">Итого Net Value: ${usd(grandTotal)}</span>`;
       window.scrollTo({top: sumEl.offsetTop - 10, behavior:'smooth'});
     }
-      // === DeBank API fetch ===
-    async function fetchFromDeBank(){
-      const base = document.getElementById('apiBase').value.trim().replace(/\/$/, '');
-      const addr = document.getElementById('userAddr').value.trim();
-      const key  = document.getElementById('apiKey').value.trim();
-      const chain= document.getElementById('chainId').value.trim();
-      if(!addr){ alert('Укажи user address'); return; }
-
-      // Основной эндпоинт: complex_protocol_list — возвращает структуру, совместимую с нашим рендером
-      const url = `${base}/v1/user/complex_protocol_list?user_addr=${encodeURIComponent(addr)}${chain?`&chain=${encodeURIComponent(chain)}`:''}&is_all=true`;
-
-      const headers = { 'Accept':'application/json' };
-      // Часто DeBank использует X-Api-Key или AccessKey — попробуем оба
-      if(key){ headers['X-Api-Key'] = key; headers['AccessKey'] = key; }
-
-      try{
-        const r = await fetch(url, { headers });
-        if(!r.ok){
-          const text = await r.text();
-          throw new Error(`HTTP ${r.status}: ${text.slice(0,300)}`);
-        }
-        const json = await r.json();
-        // Ожидаем поле data или массив протоколов:
-        const payload = Array.isArray(json) ? json : (json.data ?? json);
-        document.getElementById('jsonIn').value = JSON.stringify(payload, null, 2);
-        render();
-      }catch(e){
-        alert('Ошибка запроса к DeBank: ' + e.message + '
-
-Подсказка: если CORS, используй свой прокси в "API Base".');
-      }
-    }
-
-    document.getElementById('fetchDeBank').addEventListener('click', fetchFromDeBank);
   </script>
 </body>
 </html>
